@@ -137,8 +137,19 @@ h1 .dot,h2 .dot{color:#e7a3b5}
 .focus-bar{display:none;align-items:center;justify-content:space-between;gap:10px;background:#eee;padding:10px 12px;margin-bottom:12px;font-size:14px}
 .focus-bar.show{display:flex}
 .adaptive-pill{background:#eee}
-body.adhd-mode .eq{font-size:clamp(32px,6vw,48px)}
-body.adhd-mode .key{min-height:50px;font-size:18px}
+.toggle-row small{display:block;margin-top:4px;max-width:540px;color:#666;font-size:13px;font-weight:400;line-height:1.4}
+.mode-sample{display:flex;align-items:center;gap:10px;margin-top:14px;color:#666;font-size:13px}
+.mode-sample .key{max-width:72px;pointer-events:none}
+body.adhd-mode .eq{font-size:clamp(36px,6.5vw,56px)}
+body.adhd-mode .key{min-height:56px;font-size:20px}
+body.adhd-mode .start{font-size:16px;padding:16px 18px}
+body.adhd-mode .topic h3{font-size:22px}
+body.adhd-mode .problem{padding:40px 18px;background:#fff7f4}
+body.adhd-focus .ticker,
+body.adhd-focus .hero-chips,
+body.adhd-focus .foot,
+body.adhd-focus #streakPill{display:none!important}
+body.adhd-focus .topics{grid-template-columns:1fr;max-width:640px}
 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 16px;font-size:14px;z-index:9;max-width:min(92vw,420px);text-align:center}
 .adhd-banner{display:none}
 @media(max-width:760px){
@@ -213,10 +224,10 @@ body.adhd-mode .key{min-height:50px;font-size:18px}
 </div>
 <div class="cabinet-card" style="grid-column:1/-1">
 <h3>Режим для СДВГ</h3>
-<div class="toggle-row"><span>Спокойный интерфейс и крупные кнопки</span><button type="button" id="togAdhd" class="switch on" aria-label="Режим СДВГ" onclick="toggleAdhd()"></button></div>
-<div class="toggle-row"><span>Фокус: меньше отвлекающего на экране</span><button type="button" id="togFocus" class="switch on" aria-label="Режим фокуса" onclick="toggleFocus()"></button></div>
-<div class="toggle-row"><span>Несколько попыток на задание + бонус за исправление</span><button type="button" id="togRetry" class="switch on" aria-label="Повторные попытки" onclick="toggleRetry()"></button></div>
-<p class="sub" style="margin-top:10px">Серия 5–7 заданий. Если ответ быстрее 3 секунд и неверный — стоп и перечитать. Если больше 40 секунд на одном месте — первый шаг сам. Две ошибки подряд — проще и короче. Три уверенных ответа — на шаг сложнее. Каждые 10 минут — пауза.</p>
+<div class="toggle-row"><div><b>Спокойный интерфейс и крупные кнопки</b><small id="noteAdhd"></small></div><button type="button" id="togAdhd" class="switch on" aria-label="Режим СДВГ" onclick="toggleAdhd()"></button></div>
+<div class="toggle-row"><div><b>Фокус: меньше отвлекающего на экране</b><small id="noteFocus"></small></div><button type="button" id="togFocus" class="switch on" aria-label="Режим фокуса" onclick="toggleFocus()"></button></div>
+<div class="toggle-row"><div><b>Несколько попыток на задание + бонус за исправление</b><small id="noteRetry"></small></div><button type="button" id="togRetry" class="switch on" aria-label="Повторные попытки" onclick="toggleRetry()"></button></div>
+<div class="mode-sample"><button type="button" class="key" tabindex="-1">7</button><span>так выглядит кнопка в задании</span></div>
 </div>
 </div>
 </section>
@@ -308,7 +319,16 @@ function applyBodyModes(){
  document.body.classList.toggle('adhd-focus',!!profile.focus);
  document.getElementById('focusBar').classList.toggle('show',!!profile.focus&&document.getElementById('trainer').style.display==='block');
  syncToggles();
+ writeModeNotes();
  updateSubUi();
+}
+function writeModeNotes(){
+ const a=document.getElementById('noteAdhd');
+ const f=document.getElementById('noteFocus');
+ const r=document.getElementById('noteRetry');
+ if(a)a.textContent=profile.adhd?'Включено. Кнопки и условие крупнее, серия 5–7 заданий, стоп если ответ быстрее 3 секунд, подсказка если застрял на 40 секунд.':'Выключено. Обычный размер, 10 заданий подряд, без стопа и автоподсказки.';
+ if(f)f.textContent=profile.focus?'Включено. Спрятаны бегущая строка, метки и подвал. Темы идут одним столбцом — это видно на главной.':'Выключено. На главной три колонки, строка и все подписи на месте.';
+ if(r)r.textContent=profile.retry?'Включено. После ошибки ещё две попытки, за исправление +40 баллов.':'Выключено. Ошибка сразу показывает правильный ответ.';
 }
 function syncToggles(){
  const s=(id,on)=>{const el=document.getElementById(id);if(el){el.classList.toggle('on',on);}};
@@ -367,7 +387,7 @@ function buyPlan(plan){
 }
 function toggleAdhd(){profile.adhd=!profile.adhd;saveProfile();applyBodyModes();}
 function toggleFocus(){profile.focus=!profile.focus;saveProfile();applyBodyModes();}
-function toggleRetry(){profile.retry=!profile.retry;saveProfile();syncToggles();}
+function toggleRetry(){profile.retry=!profile.retry;saveProfile();syncToggles();writeModeNotes();}
 function pauseBreak(){
  clearTimeout(breakTimer);
  toast('Пауза 2 минуты — можно отойти, вода и глаза от экрана 💧');
