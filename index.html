@@ -38,16 +38,28 @@ h1 .dot,h2 .dot{color:#e7a3b5}
 @keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .lead,.panel .sub{max-width:620px;margin:0;font-size:17px;line-height:1.5;color:#222}
 .section-title{margin:28px 0 12px;font-size:13px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:#888}
-.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.topic{background:#f6d5df;padding:18px 16px 16px;cursor:pointer;display:flex;flex-direction:column;min-height:176px}
-.topic:nth-child(3n+2){background:#f3eee8}
-.topic:nth-child(3n){background:#efe4f2}
-.topic:hover{filter:brightness(.97)}
-.topic-face{font-size:13px;color:#c45b78;margin-bottom:10px;width:auto;height:auto;border:0;background:transparent!important;display:block}
-.topic h3{margin:0 0 6px;font-size:18px;font-weight:500;letter-spacing:-.03em}
-.topic p{margin:0;color:#444;font-size:13px;line-height:1.4}
-.topic .mini{margin-top:auto;padding-top:16px;font-size:13px;color:#c45b78}
-.topic.picked{background:#fff;outline:1px solid #ddd}
+.shelf{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 6px}
+.shelf-card{background:#f8f8f6;padding:14px 14px 12px}
+.shelf-card b{display:block;font-size:20px;font-weight:500;letter-spacing:-.03em}
+.shelf-card span{display:block;margin-top:4px;color:#555;font-size:13px;line-height:1.35}
+.shelf-card.c1{box-shadow:inset 0 8px 0 #e3a3b9}
+.shelf-card.c2{box-shadow:inset 0 8px 0 #fbeeb3}
+.shelf-card.c3{box-shadow:inset 0 8px 0 #d2eefb}
+.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 12px}
+.topic{background:#f8f8f6;padding:16px 16px 14px;cursor:pointer;display:flex;flex-direction:column;min-height:248px}
+.topic:hover{transform:translateY(-3px)}
+.topic .tag{color:#777;font-size:13px}
+.topic .folder{position:relative;margin-top:22px;padding:16px 14px 12px;border-radius:0 12px 12px 12px;flex:1;display:flex;flex-direction:column}
+.topic .folder::before{content:'';position:absolute;left:0;top:-16px;width:58px;height:18px;border-radius:8px 10px 0 0;background:inherit}
+.topic.c1 .folder{background:#e3a3b9}
+.topic.c2 .folder{background:#fbeeb3}
+.topic.c3 .folder{background:#d2eefb}
+.topic h3{margin:0 0 6px;font-size:20px;font-weight:500;letter-spacing:-.03em}
+.topic p{margin:0;color:#222;font-size:13px;line-height:1.4}
+.topic .stars{margin-top:10px;letter-spacing:3px;font-size:15px}
+.topic .best{margin-top:4px;font-size:12px;color:#333}
+.topic .mini{margin-top:auto;padding-top:14px;font-size:14px}
+.topic.picked{outline:1px solid #ddd}
 .level-panel{display:none;margin-top:14px;background:#eee;padding:16px}
 .home.picking .level-panel{display:block}
 .home.picking #homeHero{display:none}
@@ -118,8 +130,10 @@ h1 .dot,h2 .dot{color:#e7a3b5}
 .form-grid label{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#666}
 .form-grid input,.form-grid select{border:0;background:#eee;padding:14px;font-size:16px;width:100%}
 .pricing{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
-.price-card{background:#eee;padding:18px}
-.price-card.best{background:#f6d5df}
+.price-card{position:relative;background:#f8f8f6;padding:34px 18px 18px}
+.price-card::before{content:'';position:absolute;left:18px;top:0;width:78px;height:16px;border-radius:8px 10px 0 0;background:#e3a3b9}
+.price-card.best{background:#f8f8f6}
+.price-card.best::before{background:#fbeeb3}
 .price-card h3{margin:0;font-size:18px;font-weight:500}
 .price{font-size:36px;font-weight:500;letter-spacing:-.04em;margin:10px 0}
 .price small{font-size:14px;color:#666}
@@ -153,7 +167,7 @@ body.adhd-focus .topics{grid-template-columns:1fr;max-width:640px}
 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 16px;font-size:14px;z-index:9;max-width:min(92vw,420px);text-align:center}
 .adhd-banner{display:none}
 @media(max-width:760px){
- .topics,.levels,.pricing,.cabinet-grid,.stats{grid-template-columns:1fr}
+ .topics,.levels,.pricing,.cabinet-grid,.stats,.shelf{grid-template-columns:1fr}
  .home,.panel{padding:22px 16px}
  .ticker{margin-left:-16px;margin-right:-16px}
  .answer{flex-direction:column}
@@ -233,7 +247,8 @@ body.adhd-focus .topics{grid-template-columns:1fr;max-width:640px}
 </section>
 
 <section id="home" class="card home">
-<div id="homeHero"><div class="eyebrow">тренажёр для учеников с СДВГ</div><h1>математика<br>без паники<span class="dot">.</span></h1><p class="lead">Тренажёр по математике для учеников 5–9 класса с СДВГ. Одно задание на экране, короткая серия, стоп при слишком быстром ответе и подсказка, если застрял. Таблица умножения открыта сразу.</p><div class="hero-chips"><span>СДВГ и концентрация</span><span>5–9 класс</span><span>серии по 5–7 заданий</span></div></div>
+<div id="homeHero"><div class="eyebrow">тренажёр для учеников с СДВГ</div><h1>математика<br>без паники<span class="dot">.</span></h1><p class="lead">Тренажёр по математике для учеников 5–9 класса с СДВГ. Одно задание на экране, короткая серия, стоп при слишком быстром ответе и подсказка, если застрял. Таблица умножения открыта сразу.</p><div class="hero-chips"><span>СДВГ и концентрация</span><span>5–9 класс</span><span>серии по 5–7 заданий</span></div>
+<div class="shelf" id="shelf"></div></div>
 <div class="ticker" aria-hidden="true"><span>для учеников с СДВГ &nbsp;<b>★</b>&nbsp; короткие серии &nbsp;<b>★</b>&nbsp; стоп, если ответил слишком быстро &nbsp;<b>★</b>&nbsp; подсказка, если застрял &nbsp;<b>★</b>&nbsp; пауза каждые 10 минут &nbsp;<b>★</b>&nbsp; сложнее только когда уверенно &nbsp;<b>★</b>&nbsp; короткие серии &nbsp;<b>★</b>&nbsp; стоп, если ответил слишком быстро &nbsp;<b>★</b>&nbsp; подсказка, если застрял &nbsp;<b>★</b>&nbsp; пауза каждые 10 минут &nbsp;<b>★</b>&nbsp; сложнее только когда уверенно &nbsp;<b>★</b>&nbsp;</span></div>
 <button type="button" id="topicsBack" class="back topic-back" onclick="showTopics()">← ко всем темам</button>
 <h2 class="section-title" id="topicsTitle">выбери тему</h2>
@@ -305,7 +320,7 @@ let mulTable='all',mulOp='mul';
 let mistakes=JSON.parse(localStorage.getItem('sm_mistakes2')||'[]');
 let lastInput=null,shareUrl='',nextTimer=null,breakTimer=null,stuckTimer=null;
 const PROFILE_KEY='sm_profile_v1';
-const defaultProfile=()=>({name:'',grade:7,adhd:true,focus:true,retry:true,subscriptionUntil:null,plan:null,sessions:0,totalAnswered:0,totalCorrect:0,totalMs:0,totalAttempts:0,errorsFixed:0,adaptiveEase:0});
+const defaultProfile=()=>({name:'',grade:7,adhd:true,focus:true,retry:true,subscriptionUntil:null,plan:null,sessions:0,totalAnswered:0,totalCorrect:0,totalMs:0,totalAttempts:0,errorsFixed:0,adaptiveEase:0,topics:{},stars:0,day:'',dayRuns:0});
 let profile=defaultProfile();
 function loadProfile(){
  try{const raw=localStorage.getItem(PROFILE_KEY);if(raw)profile={...defaultProfile(),...JSON.parse(raw)};}catch(e){profile=defaultProfile();}
@@ -373,7 +388,8 @@ function showCabinet(){
 <div class="stat-line"><span>Среднее время ответа</span><strong>${avg} с</strong></div>
 <div class="stat-line"><span>Точность</span><strong>${acc}%</strong></div>
 <div class="stat-line"><span>Исправлено ошибок</span><strong>${profile.errorsFixed||0}</strong></div>
-<div class="stat-line"><span>Адаптивный уровень</span><strong>${profile.adaptiveEase||0}</strong></div>`;
+<div class="stat-line"><span>Адаптивный уровень</span><strong>${profile.adaptiveEase||0}</strong></div>
+<div class="stat-line"><span>Звёзды на полке</span><strong>${profile.stars||0} ★</strong></div>`;
 }
 function showOnboard(){hideScreens(['onboard']);}
 function buyPlan(plan){
@@ -1114,25 +1130,59 @@ function praise(){
  return pick(praises);
 }
 
-const topicLook={
- multiply:{e:'✖️',c:'#ffe08a'},linear:{e:'🧩',c:'#d7f5ff'},arithmetic:{e:'🧮',c:'#ffe0c2'},fractions:{e:'🍕',c:'#ffd6ea'},
- fsu:{e:'📦',c:'#e4dcff'},inequalities:{e:'⚖️',c:'#d8ffe8'},systems:{e:'🪢',c:'#fff1b8'},percents:{e:'💯',c:'#ffd0d8'},
- powers:{e:'🚀',c:'#e7f0ff'},modulus:{e:'📏',c:'#f3e1ff'},line:{e:'📍',c:'#d9fff4'},words:{e:'📝',c:'#fff4c8'},quadratic:{e:'🎯',c:'#ffe8d6'}
-};
+function starLine(n){n=Math.max(0,Math.min(3,n||0));return '★'.repeat(n)+'☆'.repeat(3-n)}
+function topicMeta(id){return (profile.topics&&profile.topics[id])||{best:0,runs:0,stars:0}}
+function saveTopicRun(pct){
+ const id=state.topic;
+ if(!id||id==='mistakes')return;
+ profile.topics=profile.topics||{};
+ const t=profile.topics[id]||{best:0,runs:0,stars:0};
+ t.runs=(t.runs||0)+1;
+ t.best=Math.max(t.best||0,pct);
+ const earned=pct>=100?3:pct>=90?2:pct>=70?1:0;
+ if(earned>(t.stars||0))t.stars=earned;
+ profile.topics[id]=t;
+ profile.stars=Object.values(profile.topics).reduce((s,x)=>s+(x.stars||0),0);
+ const day=new Date().toISOString().slice(0,10);
+ if(profile.day!==day){profile.day=day;profile.dayRuns=0}
+ profile.dayRuns=(profile.dayRuns||0)+1;
+ saveProfile();
+}
+function renderShelf(){
+ const el=document.getElementById('shelf');
+ if(!el)return;
+ const stars=profile.stars||0;
+ const today=new Date().toISOString().slice(0,10);
+ const runs=profile.day===today?(profile.dayRuns||0):0;
+ const prize=stars>=12?'полка собрана: медаль «держим темп»':stars>=5?'дальше 12 ★ — медаль «держим темп»':'дальше 5 ★ — значок «я стараюсь»';
+ el.innerHTML=`<div class="shelf-card c1"><b>${runs?('сегодня '+runs):'сегодня 0'}</b><span>${runs?'серия уже была, можно ещё одну':'одна короткая серия — и день засчитан'}</span></div>
+<div class="shelf-card c2"><b>${stars} ★</b><span>70% — одна звезда, 90% — две, всё верно — три</span></div>
+<div class="shelf-card c3"><b>полка</b><span>${prize}</span></div>`;
+}
+function folderCard(t,i,onlyId){
+ const n=String(i+1).padStart(2,'0');
+ const open=hasAccess()||freeTopic(t.id);
+ const meta=topicMeta(t.id);
+ const tone='c'+((i%3)+1);
+  const best=meta.runs?`лучший результат ${meta.best}%`:'ещё не открывал(а)';
+ return `<div class="tag">${n} · ${open?'открыто':'по подписке'}</div><div class="folder"><h3>${t.title}</h3><p>${t.desc}</p><div class="stars">${starLine(meta.stars)}</div><div class="best">${best}</div>${onlyId?'':'<div class="mini">открыть папку →</div>'}</div>`;
+}
 function renderTopics(onlyId){
  const box=document.getElementById('topics');box.innerHTML='';
+ renderShelf();
+ let i0=0;
  if(!onlyId && mistakes.length && hasAccess()){
-  const e=document.createElement('div');e.className='topic mistakes';e.onclick=startMistakes;
-  e.innerHTML=`<div class="topic-face">00</div><div><h3>ошибки</h3><p>Повтори то, где споткнулся. Сейчас ${mistakes.length}.</p><div class="mini">разобрать →</div></div>`;
+  const e=document.createElement('div');e.className='topic c3';e.onclick=startMistakes;
+  e.innerHTML=`<div class="tag">00 · ошибки</div><div class="folder"><h3>разобрать ошибки</h3><p>Сейчас ${mistakes.length}. Короткая папка, только то, где споткнулся.</p><div class="mini">открыть папку →</div></div>`;
   box.appendChild(e);
+  i0=1;
  }
  const list=onlyId?topics.filter(t=>t.id===onlyId):topics;
  list.forEach((t,i)=>{
   const e=document.createElement('div');
-  e.className='topic'+(onlyId?' picked':'');
+  e.className='topic c'+(((i+i0)%3)+1)+(onlyId?' picked':'');
   if(!onlyId)e.onclick=()=>selectTopic(t.id);
-  const n=String(i+1).padStart(2,'0');
-  e.innerHTML=`<div class="topic-face">${n}</div><div><h3>${t.title}</h3><p>${t.desc}</p>${onlyId?'':'<div class="mini">решать →</div>'}</div>`;
+  e.innerHTML=folderCard(t,i,onlyId);
   box.appendChild(e);
  });
 }
@@ -1377,7 +1427,9 @@ function finish(){
  document.getElementById('rCorrect').textContent=state.correct+'/'+total;
  document.getElementById('rBest').textContent=state.best;
  document.getElementById('rPoints').textContent=state.points;
- document.getElementById('resultText').textContent=p>=90?'Идеально, умничка. Можно двигаться дальше 💅🏻':p>=70?'Уровень пройден, ты молодец ♡ Следующий открыт!':'Не страшно. Разбери ошибки и попробуй ещё раз — получится.';
+ saveTopicRun(p);
+ const gained=p>=100?3:p>=90?2:p>=70?1:0;
+ document.getElementById('resultText').textContent=(p>=90?'Идеально, умничка. Можно двигаться дальше.':p>=70?'Уровень пройден. Следующий открыт.':'Не страшно. Разбери ошибки и попробуй ещё раз.')+(gained?` На полке за тему ${starLine(gained)}.`:' До звезды нужно от 70%.');
  if(p<70&&profile.adhd)document.getElementById('resultText').textContent+=' Адаптация сделает следующую серию короче и спокойнее.';
  if(p>=70 && state.topic!=='multiply' && state.topic!=='mistakes'){const key=state.topic+'_'+(state.level+1);unlocked[key]=true;localStorage.setItem('sm_unlocked',JSON.stringify(unlocked))}
  const retry=document.getElementById('retryMistakes');
