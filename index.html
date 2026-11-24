@@ -163,7 +163,6 @@ body.adhd-focus .ticker,
 body.adhd-focus .hero-chips,
 body.adhd-focus .foot,
 body.adhd-focus #streakPill{display:none!important}
-body.adhd-focus .topics{grid-template-columns:1fr;max-width:640px}
 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 16px;font-size:14px;z-index:9;max-width:min(92vw,420px);text-align:center}
 .adhd-banner{display:none}
 @media(max-width:760px){
@@ -342,7 +341,7 @@ function writeModeNotes(){
  const f=document.getElementById('noteFocus');
  const r=document.getElementById('noteRetry');
  if(a)a.textContent=profile.adhd?'Включено. Кнопки и условие крупнее, серия 5–7 заданий, стоп если ответ быстрее 3 секунд, подсказка если застрял на 40 секунд.':'Выключено. Обычный размер, 10 заданий подряд, без стопа и автоподсказки.';
- if(f)f.textContent=profile.focus?'Включено. Спрятаны бегущая строка, метки и подвал. Темы идут одним столбцом — это видно на главной.':'Выключено. На главной три колонки, строка и все подписи на месте.';
+ if(f)f.textContent=profile.focus?'Включено. Спрятаны бегущая строка, метки и подвал. Папки тем остаются на месте.':'Выключено. На главной видны строка, метки и подвал.';
  if(r)r.textContent=profile.retry?'Включено. После ошибки ещё две попытки, за исправление +40 баллов.':'Выключено. Ошибка сразу показывает правильный ответ.';
 }
 function syncToggles(){
