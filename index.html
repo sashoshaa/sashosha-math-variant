@@ -42,18 +42,18 @@ h1 .dot,h2 .dot{color:#e7a3b5}
 .shelf-card{background:#f8f8f6;padding:14px 14px 12px}
 .shelf-card b{display:block;font-size:20px;font-weight:500;letter-spacing:-.03em}
 .shelf-card span{display:block;margin-top:4px;color:#555;font-size:13px;line-height:1.35}
-.shelf-card.c1{box-shadow:inset 0 8px 0 #e3a3b9}
-.shelf-card.c2{box-shadow:inset 0 8px 0 #fbeeb3}
-.shelf-card.c3{box-shadow:inset 0 8px 0 #d2eefb}
+.shelf-card.c1{box-shadow:inset 0 8px 0 #f8e3eb}
+.shelf-card.c2{box-shadow:inset 0 8px 0 #fdf6dc}
+.shelf-card.c3{box-shadow:inset 0 8px 0 #eaf6fb}
 .topics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 12px}
-.topic{background:#f8f8f6;padding:16px 16px 14px;cursor:pointer;display:flex;flex-direction:column;min-height:248px}
+.topic{background:#f8f8f6;padding:16px 16px 14px;cursor:pointer;display:flex;flex-direction:column;min-height:0}
 .topic:hover{transform:translateY(-3px)}
 .topic .tag{color:#777;font-size:13px}
 .topic .folder{position:relative;margin-top:22px;padding:16px 14px 12px;border-radius:0 12px 12px 12px;flex:1;display:flex;flex-direction:column}
 .topic .folder::before{content:'';position:absolute;left:0;top:-16px;width:58px;height:18px;border-radius:8px 10px 0 0;background:inherit}
-.topic.c1 .folder{background:#e3a3b9}
-.topic.c2 .folder{background:#fbeeb3}
-.topic.c3 .folder{background:#d2eefb}
+.topic.c1 .folder{background:#f8e3eb}
+.topic.c2 .folder{background:#fdf6dc}
+.topic.c3 .folder{background:#eaf6fb}
 .topic h3{margin:0 0 6px;font-size:20px;font-weight:500;letter-spacing:-.03em}
 .topic p{margin:0;color:#222;font-size:13px;line-height:1.4}
 .topic .stars{margin-top:10px;letter-spacing:3px;font-size:15px}
@@ -131,9 +131,9 @@ h1 .dot,h2 .dot{color:#e7a3b5}
 .form-grid input,.form-grid select{border:0;background:#eee;padding:14px;font-size:16px;width:100%}
 .pricing{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
 .price-card{position:relative;background:#f8f8f6;padding:34px 18px 18px}
-.price-card::before{content:'';position:absolute;left:18px;top:0;width:78px;height:16px;border-radius:8px 10px 0 0;background:#e3a3b9}
+.price-card::before{content:'';position:absolute;left:18px;top:0;width:78px;height:16px;border-radius:8px 10px 0 0;background:#f8e3eb}
 .price-card.best{background:#f8f8f6}
-.price-card.best::before{background:#fbeeb3}
+.price-card.best::before{background:#fdf6dc}
 .price-card h3{margin:0;font-size:18px;font-weight:500}
 .price{font-size:36px;font-weight:500;letter-spacing:-.04em;margin:10px 0}
 .price small{font-size:14px;color:#666}
@@ -1158,13 +1158,10 @@ function renderShelf(){
 <div class="shelf-card c2"><b>${stars} ★</b><span>70% — одна звезда, 90% — две, всё верно — три</span></div>
 <div class="shelf-card c3"><b>полка</b><span>${prize}</span></div>`;
 }
-function folderCard(t,i,onlyId){
- const n=String(i+1).padStart(2,'0');
- const open=hasAccess()||freeTopic(t.id);
+function folderCard(t){
  const meta=topicMeta(t.id);
- const tone='c'+((i%3)+1);
-  const best=meta.runs?`лучший результат ${meta.best}%`:'ещё не открывал(а)';
- return `<div class="tag">${n} · ${open?'открыто':'по подписке'}</div><div class="folder"><h3>${t.title}</h3><p>${t.desc}</p><div class="stars">${starLine(meta.stars)}</div><div class="best">${best}</div>${onlyId?'':'<div class="mini">открыть папку →</div>'}</div>`;
+ const stars=meta.stars?`<div class="stars">${starLine(meta.stars)}</div>`:'';
+ return `<div class="folder"><h3>${t.title}</h3>${stars}</div>`;
 }
 function renderTopics(onlyId){
  const box=document.getElementById('topics');box.innerHTML='';
@@ -1172,7 +1169,7 @@ function renderTopics(onlyId){
  let i0=0;
  if(!onlyId && mistakes.length && hasAccess()){
   const e=document.createElement('div');e.className='topic c3';e.onclick=startMistakes;
-  e.innerHTML=`<div class="tag">00 · ошибки</div><div class="folder"><h3>разобрать ошибки</h3><p>Сейчас ${mistakes.length}. Короткая папка, только то, где споткнулся.</p><div class="mini">открыть папку →</div></div>`;
+  e.innerHTML=`<div class="folder"><h3>ошибки</h3></div>`;
   box.appendChild(e);
   i0=1;
  }
@@ -1181,7 +1178,7 @@ function renderTopics(onlyId){
   const e=document.createElement('div');
   e.className='topic c'+(((i+i0)%3)+1)+(onlyId?' picked':'');
   if(!onlyId)e.onclick=()=>selectTopic(t.id);
-  e.innerHTML=folderCard(t,i,onlyId);
+  e.innerHTML=folderCard(t);
   box.appendChild(e);
  });
 }
